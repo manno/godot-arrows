@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://player.gd" type="Script" id=1]
+[ext_resource path="res://school/school_all_spritesheet.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 14.6228, 13.743 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "PlayerAnim"
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( -0.1, 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 24, 27, 24, 26 ]
+}
+
+[node name="RigidBody2D" type="RigidBody2D"]
+mode = 2
+mass = 1.63776
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -0.257935, 0.0987244 )
+scale = Vector2( 4.64483, 4.03595 )
+texture = ExtResource( 2 )
+centered = false
+vframes = 15
+hframes = 16
+frame = 26
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 17.3373, 17.575 )
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/PlayerAnim = SubResource( 1 )
+[connection signal="body_entered" from="." to="." method="_on_RigidBody2D_body_entered"]

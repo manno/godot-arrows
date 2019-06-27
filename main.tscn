@@ -1,0 +1,21 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 551.0
+margin_bottom = 457.0
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 232.0
+margin_top = 39.0
+margin_right = 276.0
+margin_bottom = 53.0
+text = "Arrows"
+
+[node name="Button" type="Button" parent="Panel"]
+margin_left = 231.0
+margin_top = 96.0
+margin_right = 279.0
+margin_bottom = 116.0
+text = "Shoot"
