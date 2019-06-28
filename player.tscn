@@ -24,7 +24,7 @@ tracks/0/keys = {
 "values": [ 24, 27, 24, 26 ]
 }
 
-[node name="Body2D" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D"]
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true

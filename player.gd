@@ -1,5 +1,7 @@
 extends KinematicBody2D
 signal hit
+export var hero = true
+export var mp_enabled = false
 
 const GRAVITY = 500.0 # pixels/second/second
 
@@ -20,7 +22,6 @@ var velocity = Vector2()
 var on_air_time = 100
 var jumping = false
 var prev_jump_pressed = false
-var screensize
 var jump
 
 var arrow_scene = preload("res://arrow.tscn")
@@ -29,6 +30,9 @@ onready var sprite = $Sprite
 func hit_by_arrow():
     print_debug("hit")
 
+slave func set_pos(pos):
+    position=pos    
+    
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     # Create forces
@@ -81,7 +85,13 @@ func _process(delta):
 
 func _physics_process(delta):
     # Integrate velocity into motion and move
-    velocity = move_and_slide(velocity, Vector2(0, -1))
+    
+    if mp_enabled:
+        if (is_network_master()):
+            velocity = move_and_slide(velocity, Vector2(0, -1))
+            rpc_unreliable("set_pos",position)
+    else:
+        velocity = move_and_slide(velocity, Vector2(0, -1))        
     
     if is_on_floor():
         on_air_time = 0
@@ -102,7 +112,8 @@ func _physics_process(delta):
 # Called when the node enters the scene tree for the first time.
 func _ready():
     #hide()
-    screensize = get_viewport_rect().size    
+    if !hero:
+        print("TODO change sprite frame to another hero")
 
 func start(pos):
     position = pos
