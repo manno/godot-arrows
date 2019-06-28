@@ -75,4 +75,5 @@ func wrapBy(axis):
     # I.e. get axis wrap direction and multiply by axis size    
     var adjust = getAxisWrapDirection(axis) * wrapArea.size[axis]    
     # Apply the adjustment to the parent's position    
+    #print_debug("adj: ", wrapArea.size[axis], " ", adjust)
     get_parent().position[axis] += adjust

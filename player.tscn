@@ -35,9 +35,18 @@ texture = ExtResource( 2 )
 vframes = 15
 hframes = 16
 frame = 26
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="arrow_start" type="Node2D" parent="Sprite"]
+position = Vector2( 4.46777, 0.0253849 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Walking = SubResource( 2 )

@@ -14,6 +14,7 @@ const JUMP_MAX_AIRBORNE_TIME = 0.5
 
 const SLIDE_STOP_VELOCITY = 1.0 # one pixel/second
 const SLIDE_STOP_MIN_TRAVEL = 1.0 # one pixel
+const BULLET_VELOCITY = 1000
 
 var velocity = Vector2()
 var on_air_time = 100
@@ -21,6 +22,9 @@ var jumping = false
 var prev_jump_pressed = false
 var screensize
 var jump
+
+var arrow_scene = preload("res://arrow.tscn")
+onready var sprite = $Sprite
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -33,17 +37,26 @@ func _process(delta):
     
     var stop = true
     
+    # Shooting
+    if Input.is_action_just_pressed("shoot"):
+        var arrow = arrow_scene.instance()
+        arrow.position = $Sprite/arrow_start.global_position #use node for shoot position
+        #arrow.get_node("./Sprite").scale(Vector2(0.5,0.5))
+        arrow.linear_velocity = Vector2(sprite.scale.x * BULLET_VELOCITY, 0)
+        #arrow.add_collision_exception_with(self) # don't want player to collide with bullet
+        get_parent().add_child(arrow) #don't want bullet to move with me, so add it as child of parent
+    
     if walk_left:
         if velocity.x <= WALK_MIN_SPEED and velocity.x > -WALK_MAX_SPEED:
             force.x -= WALK_FORCE
             stop = false
-            $Sprite.flip_h = true
+            sprite.flip_h = true
         
     elif walk_right:
         if velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED:
             force.x += WALK_FORCE
             stop = false
-            $Sprite.flip_h = false
+            sprite.flip_h = false
     
     if stop:
         var vsign = sign(velocity.x)
