@@ -26,6 +26,9 @@ var jump
 var arrow_scene = preload("res://arrow.tscn")
 onready var sprite = $Sprite
 
+func hit_by_arrow():
+    print_debug("hit")
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
     # Create forces
@@ -50,13 +53,13 @@ func _process(delta):
         if velocity.x <= WALK_MIN_SPEED and velocity.x > -WALK_MAX_SPEED:
             force.x -= WALK_FORCE
             stop = false
-            sprite.flip_h = true
+            sprite.scale.x = -1
         
     elif walk_right:
         if velocity.x >= -WALK_MIN_SPEED and velocity.x < WALK_MAX_SPEED:
             force.x += WALK_FORCE
             stop = false
-            sprite.flip_h = false
+            sprite.scale.x = 1
     
     if stop:
         var vsign = sign(velocity.x)
